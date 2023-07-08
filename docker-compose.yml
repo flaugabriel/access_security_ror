@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+
+  cnab-api: &cnab-api
+    build: cnab-api
+    tty: true
+    stdin_open: true
+    command: bash start.sh
+    volumes:
+      - ./cnab-api:/cnab-api
+    ports:
+      - 3030:3030
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: db
+
+  cnab-client: &cnab-client
+    build: cnab-client
+    command: bash start-client.sh
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./cnab-client:/var/www/html
+    ports:
+      - 3000:3000
+    depends_on:
+      - cnab-api
