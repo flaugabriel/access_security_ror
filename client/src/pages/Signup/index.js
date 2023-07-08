@@ -35,7 +35,7 @@ const Signup = () => {
 
   return (
     <C.Container>
-      <C.Label>REGISTRE-SE - DESAFIO DEV CNAB APP</C.Label>
+      <C.Label>REGISTRE-SE</C.Label>
       <C.Content>
         <Input
           type="email"

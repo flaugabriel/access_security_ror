@@ -26,6 +26,7 @@ const Signin = () => {
           setSigned(true)
         }
       }).catch(function (error) {
+        console.log();
         alert(error.response.data.errors[0]);
       });
     }
@@ -41,7 +42,7 @@ const Signin = () => {
 
   return (
     <C.Container>
-      <C.Label>LOGIN - DESAFIO DEV CNAB APP</C.Label>
+      <C.Label>LOGIN</C.Label>
       <C.Content>
         <Input
           type="email"

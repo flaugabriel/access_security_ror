@@ -10,13 +10,13 @@ services:
     ports:
       - "5432:5432"
 
-  cnab-api: &cnab-api
-    build: cnab-api
+  api: &api
+    build: api
     tty: true
     stdin_open: true
     command: bash start.sh
     volumes:
-      - ./cnab-api:/cnab-api
+      - ./api:/api
     ports:
       - 3030:3030
     depends_on:
@@ -26,14 +26,14 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST: db
 
-  cnab-client: &cnab-client
-    build: cnab-client
+  client: &client
+    build: client
     command: bash start-client.sh
     tty: true
     stdin_open: true
     volumes:
-      - ./cnab-client:/var/www/html
+      - ./client:/var/www/html
     ports:
       - 3000:3000
     depends_on:
-      - cnab-api
+      - api

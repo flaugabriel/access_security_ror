@@ -15,47 +15,45 @@ Tecnologias utilizadas:
 * Rails 7.0.4.3 (api)
 * React 18.2.0
 * PostgreSQL Stable
-* Docker/Compose 24.0.0
+* Docker 24.0.0 /Compose 1.29.2
 
 ## Preparação de como configura este projeto ? 🔨
 OBS: Para os requisitos nescessario para executa esse projeto é preciso do docker/docker-compose.  Dependendo da versão que está instalado em seu equipamento o comando de ação muda versões mais antigas 2022 estão operando com a sintaxe
 ```docker-compose ```a mais atual é ```docker compose ```. 
+No caso deste projeto foi utilizado o comando compose da forma antiga na versão 1.29.2
 
 ## Setup 
 Na raiz do projeto acess_security_ror execute:
 Para instala e configura as imagens e containers 
+
 ```shell
-docker compose build
+docker-compose build
 ```
 Levanta os servidores
+
 ```shell
-docker compose up
+docker-compose up
 ```
 Configurando o banco de dados
+
 ```shell
-docker compose run --rm access_security_roo rails db:drop db:create db:migrate db:seed
+docker-compose run --rm api rails db:drop db:create db:migrate
 ```
 Acesse [localhost:3000](localhost:3000) Para visualiza a ir a de login ou Realize um Cadastro usando esse link http://localhost:3000/signup
 
-## Consumindo os endpoint da API (access_security_roo)
+## Consumindo os endpoint da API
 Nota: esta api se encontra preparada para versionamento. (plus)
 ### Rotas Auth
 
 * POST http://localhost:3030/api/auth/sign_in (LOGIN)
 
-* POST http://localhost:3030/api/v1/veiculos (CADASTRO DE USUÁRIO)
+* POST http://localhost:3030/api/v1/sign_up (CADASTRO DE USUÁRIO)
 
 ### Rotas users
 
-* GET http://localhost:3030/api/myaccount/profile (PERFIL DO USUPARIO/SESSÃO)
+* GET http://localhost:3030/api/myaccount/mfa (PERFIL DO USUPARIO/SESSÃO)
 
-* POST http://localhost:3030/api/myaccount/profile (ATUALIZA O DO USUARIO)(PLUS)
-
-### Rotas CNAB
-
-* POST http://localhost:3030/api/cnabs/import (IMPORTAÇÃO DO ARQUIVO CNAB)
-* GET http://localhost:3030/api/cnabs (LISTA AS CNAB)
-* DELETE http://localhost:3030/api/cnabs (DELETA TODAS AS CNAB DO USUÁRIO)
+* POST http://localhost:3030/api/myaccount/token (ATUALIZA O DO USUARIO)(PLUS)
 
 ### Autenticação (plus)
 * Após o login e necessário envia via headers o 
@@ -143,177 +141,10 @@ resposta:
 		"updated_at": "2023-05-22T10:49:16.968-04:00"
 	}
 }
-```
-### CNAB
-#### lista:
 
-```GET localhost:3030/api/cnabs```
-```json
-[
-	{
-		"id": 337,
-		"type_cnabs": "Financiamento",
-		"date_occurrence": "01/03/2019",
-		"value": "142.0",
-		"card": 4753,
-		"hours": "153453",
-		"deal": {
-			"id": 3,
-			"type_transaction": 3,
-			"description": "Financiamento",
-			"nature": "Saída",
-			"signal": "-"
-		},
-		"user": {
-			"id": 2,
-			"provider": "email",
-			"uid": "teste@test.com",
-			"allow_password_change": false,
-			"email": "teste@test.com",
-			"created_at": "2023-05-22T11:08:40.547-04:00",
-			"updated_at": "2023-05-23T00:37:27.506-04:00"
-		},
-		"store": {
-			"id": 1,
-			"store_owner": "JOÃO MACEDO",
-			"cpf": "09620676017",
-			"store_name": "BAR DO JOÃO",
-			"balance_total": "-102.0"
-		}
-	},
-	{
-		"id": 338,
-		"type_cnabs": "Recebimento Empréstimo",
-		"date_occurrence": "01/03/2019",
-		"value": "132.0",
-		"card": 3123,
-		"hours": "145607",
-		"deal": {
-			"id": 5,
-			"type_transaction": 5,
-			"description": "Recebimento Empréstimo",
-			"nature": "Entrada",
-			"signal": "+"
-		},
-		"user": {
-			"id": 2,
-			"provider": "email",
-			"uid": "teste@test.com",
-			"allow_password_change": false,
-			"email": "teste@test.com",
-			"created_at": "2023-05-22T11:08:40.547-04:00",
-			"updated_at": "2023-05-23T00:37:27.506-04:00"
-		},
-		"store": {
-			"id": 2,
-			"store_owner": "MARIA JOSEFINA",
-			"cpf": "55641815063",
-			"store_name": "LOJA DO Ó - MATRIZ",
-			"balance_total": "382.32"
-		}
-	},
-	{
-		"id": 339,
-		"type_cnabs": "Financiamento",
-		"date_occurrence": "01/03/2019",
-		"value": "122.0",
-		"card": 6777,
-		"hours": "172712",
-		"deal": {
-			"id": 3,
-			"type_transaction": 3,
-			"description": "Financiamento",
-			"nature": "Saída",
-			"signal": "-"
-		},
-		"user": {
-			"id": 2,
-			"provider": "email",
-			"uid": "teste@test.com",
-			"allow_password_change": false,
-			"email": "teste@test.com",
-			"created_at": "2023-05-22T11:08:40.547-04:00",
-			"updated_at": "2023-05-23T00:37:27.506-04:00"
-		},
-		"store": {
-			"id": 3,
-			"store_owner": "MARCOS PEREIRA",
-			"cpf": "84515254073",
-			"store_name": "MERCADO DA AVENIDA",
-			"balance_total": "489.2"
-		}
-	},
-	{
-		"id": 344,
-		"type_cnabs": "Financiamento",
-		"date_occurrence": "01/03/2019",
-		"value": "602.0",
-		"card": 6777,
-		"hours": "172712",
-		"deal": {
-			"id": 3,
-			"type_transaction": 3,
-			"description": "Financiamento",
-			"nature": "Saída",
-			"signal": "-"
-		},
-		"user": {
-			"id": 2,
-			"provider": "email",
-			"uid": "teste@test.com",
-			"allow_password_change": false,
-			"email": "teste@test.com",
-			"created_at": "2023-05-22T11:08:40.547-04:00",
-			"updated_at": "2023-05-23T00:37:27.506-04:00"
-		},
-		"store": {
-			"id": 4,
-			"store_owner": "JOSÉ COSTA",
-			"cpf": "23270298056",
-			"store_name": "MERCEARIA 3 IRMÃOS",
-			"balance_total": "-7023.0"
-		}
-	}
-]
-```
-
-#### upload:
-```POST localhost:3030/api/cnabs/import```
-```json
-{
-  "file": "txt",
-}
-```
-resposta:
-```json
-{
-	"message": "CNAB importada com sucesso!",
-	"status": true
-}
-```
-#### deleta cnab do usuário logado:
-```DELETE localhost:3030/api/cnabs```
-```json
-{
-  "email": "test@gmail.com",
-  "password": "12345678",
-  "password_confirmation": "12345678"
-}
-```
-resposta:
-```json
-{
-	"message": "Removido com sucesso! 21 registros"
-}
 ```
 ## Testes 
 
-Configurando o banco de dados de teste
-
-prepara a tabela Deal (transações)
-```shell
-docker compose run --rm access_security_roo rails ENVIROMENT=test db:seed
-```
 Executando todos os testes
 ```shell
 docker compose run --rm access_security_roo rspec
