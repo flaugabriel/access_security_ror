@@ -6,7 +6,17 @@ include ActionController::RespondWith
 describe 'Whether access is ocurring properly', type: :request do
   let(:current_user) { create(:user) }
 
-  context 'context: general authentication via API, ' do
+  context 'tentative to make login' do
+    it '' do
+      current_user.password = 'nocorrent'
+      login current_user
+      
+      expect(response.body).to eq('Please try again')
+    end
+  end
+  
+
+  context 'context: general authentication by API, ' do
     it 'gives you an authentication code if you are an existing user and you satisfy the password' do
       login current_user
       expect(response.has_header?('access-token')).to eq(true)

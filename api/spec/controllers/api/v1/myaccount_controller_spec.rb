@@ -54,7 +54,7 @@ RSpec.describe 'Api::V1::MyaccountController', type: :request do
       end
     end
   end
-
+  
   def login(current_user)
     post '/api/auth/sign_in', params: { email: current_user.email, password: current_user.password }
   end
