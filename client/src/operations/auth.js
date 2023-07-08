@@ -40,4 +40,4 @@ export const signout = () => {
   localStorage.removeItem("authorization");
 };
 
-export default [signup, signout, signin, session]
+export default [signup, signout, signin, session];

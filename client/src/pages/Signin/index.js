@@ -38,7 +38,7 @@ const Signin = () => {
     }else{
       navigate('/')
     }
-  },[signed]);
+  },[ signed ]);
 
   return (
     <C.Container>
