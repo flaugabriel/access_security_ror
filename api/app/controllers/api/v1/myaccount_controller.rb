@@ -11,10 +11,15 @@ module Api
 
       def update
         if current_user.update(set_params)
+          UserMailer.update_password(current_user).deliver_now
           render json: { message: 'Perfil atualizado.' }, status: :ok
         else
           render json: { error: current_user.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
+      end
+
+      def forgot_password
+        
       end
 
       private

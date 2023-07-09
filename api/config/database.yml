@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: cnab_api_development
+  database: db_api_development
 
 test:
   <<: *default
-  database: cnab_api_test
+  database: db_api_test
 
 production:
   <<: *default
-  database: cnab_api_production
+  database: db_api_production

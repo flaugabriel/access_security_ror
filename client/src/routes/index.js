@@ -6,8 +6,10 @@ import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import Password from "../pages/User/Password";
 import Navbar from "../components/Navbar";
-import Mfa from "../pages/User/Mfa";
-
+import MfaForLogin from "../pages/MfaForLogin";
+import MfaSettings from "../pages/User/Password/MfaSettings";
+import ForgotPassword from "../pages/ForgotPassword";
+import UpdatePassword from "../pages/UpdatePassword";
 
 const Private = ({ Item }) => {
   const authorization = localStorage.getItem("authorization");
@@ -19,7 +21,7 @@ const Private = ({ Item }) => {
         setUser(items.data.data)
       }
     }).catch(error => {
-      alert(error.response.data.errors[0])
+      console.log(error);
     });
   }
 
@@ -35,12 +37,12 @@ const Private = ({ Item }) => {
   }
 
   return(
-      signed ? 
-      <>
-        <Navbar user={user}/>
-        <Item /> 
-      </>
-      :
+    signed ? 
+    <>
+      <Navbar user={user}/>
+      <Item />
+    </>
+    :
     <>
       <Signin />
     </>
@@ -56,7 +58,10 @@ const RoutesApp = () => {
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route exact path="/password" element={<Private Item={Password} />} />
-          <Route exact path="/mfa" element={<Private Item={Mfa} />} />
+          <Route exact path="/settings/mfa" element={<Private Item={MfaSettings} />} />
+          <Route path="/mfa" element={<MfaForLogin />} />
+          <Route path="/update_password" element={<UpdatePassword />} />
+          <Route path="/forgot_password" element={<ForgotPassword />} />
           <Route path="/" element={<Signin />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="*" element={<Signin />} />

@@ -15,7 +15,7 @@ const Navbar = ({user}) => {
             <form className="d-flex">
               <a className="navbar-brand" href="/home">HOME</a>
               <a className="navbar-brand" href="/password">Senha</a>
-              <a className="navbar-brand" href="/mfa">MFA</a>
+              <a className="navbar-brand" href="/settings/mfa">MFA</a>
             </form>
 
             <form className="d-flex">

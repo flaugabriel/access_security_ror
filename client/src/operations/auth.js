@@ -36,8 +36,32 @@ export const session = (authorization) =>
     }
   })
 
+export const passwordUpdate = (authorization, password, password_confirmation) =>
+  axios({
+    url: urlBase + 'myaccount/profile',
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `${authorization}`
+    },
+    data: { user: { password: password, password_confirmation: password_confirmation }},
+  })
+
+export const forgotPassword = (authorization, email) =>
+  axios({
+    url: urlBase + 'myaccount/profile',
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `${authorization}`
+    },
+    data: { email: email},
+  })
+
 export const signout = () => {
   localStorage.removeItem("authorization");
 };
 
-export default [signup, signout, signin, session];
+export default [signup, signout, signin, session, passwordUpdate];

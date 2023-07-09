@@ -2,15 +2,33 @@ import React, { useState } from "react";
 import * as C from "./styles";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+import { passwordUpdate } from "../../../operations/auth";
+import { useNavigate } from "react-router-dom";
 
 const Password = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
 
-  const handlePasswordUpdate = () => {
+  const handlePasswordUpdate = (event) => {
+  const authorization = localStorage.getItem("authorization");
+
     if (!password | !password_confirmation) {
       setError("Preencha todos os campos");
+    }else{
+      event.preventDefault();
+      passwordUpdate(authorization, password, password_confirmation).then((response) => {
+        if (response.data.status === 404) {
+          console.log(response.data.errors[0]);
+        } else {
+          alert(response.data.message)
+          navigate('/')
+        }
+      }).catch(function (error) {
+        console.log(error);
+        alert( error.response.data.error)
+      });
     }
   };
 
