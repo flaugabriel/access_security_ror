@@ -7,6 +7,7 @@ Rails.application.routes.draw do
  
   post 'password/forgot', to: 'password#forgot'
   post 'password/reset', to: 'password#reset'
+  get 'unlock/show', to: 'unlock#show'
 
   namespace :api, defaults: { format: :json } do
     mount_devise_token_auth_for 'User', at: 'auth'

@@ -10,4 +10,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: user.email, subject: 'Password updated')
   end
+
+  def login_attempt_notification(user)
+    @user = user
+    mail(to: user.email, subject: 'Login notification')
+  end 
 end

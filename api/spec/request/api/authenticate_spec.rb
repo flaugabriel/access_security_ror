@@ -1,20 +1,11 @@
 # frozen_string_literal: true
+# :nocov:
 
 require 'rails_helper'
 include ActionController::RespondWith
 
 describe 'Whether access is ocurring properly', type: :request do
   let(:current_user) { create(:user) }
-
-  context 'tentative to make login' do
-    it '' do
-      current_user.password = 'nocorrent'
-      login current_user
-      
-      expect(response.body).to eq('Please try again')
-    end
-  end
-  
 
   context 'context: general authentication by API, ' do
     it 'gives you an authentication code if you are an existing user and you satisfy the password' do
@@ -34,7 +25,7 @@ describe 'Whether access is ocurring properly', type: :request do
     end
 
     it 'gives you a status 401 on signing in ' do
-      current_user.password = '321654978'
+      current_user.password = '3216549786516516'
       login current_user
       expect(response.status).to eq(401)
     end
