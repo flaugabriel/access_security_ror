@@ -3,16 +3,16 @@ class UserMailer < ApplicationMailer
 
   def forgot_password(user)
     @user = user
-    mail(to: user.email, subject: 'Forgot your password')
+    mail(to: user.email, subject: 'Esqueceu sua senha?')
   end
 
   def update_password(user)
     @user = user
-    mail(to: user.email, subject: 'Password updated')
+    mail(to: user.email, subject: 'Senha atualizada!')
   end
 
   def login_attempt_notification(user)
     @user = user
-    mail(to: user.email, subject: 'Login notification')
+    mail(to: user.email, subject: 'Notificação de login em sua conta.')
   end 
 end
