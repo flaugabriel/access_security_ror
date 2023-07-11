@@ -10,9 +10,6 @@
 # Many of these configuration options can be set straight in your model.
 
 Devise.setup do |config|
-  config.warden do |manager|
-    manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
-  end
 
   config.mailer_sender = 'noreply@example.com'
 
@@ -269,7 +266,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = [:json]
+  config.navigational_formats = [:"*/*", "*/*", :html, :json]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete

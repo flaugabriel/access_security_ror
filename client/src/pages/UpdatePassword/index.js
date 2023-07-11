@@ -2,32 +2,51 @@ import React, { useState } from "react";
 import * as C from "./styles";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { resetPassword } from "../../operations/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UpdatePassword = () => {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  let token = location.search.slice(1).split('&').map(kv => kv.split('='))[0][1]
+  var email = location.search.slice(1).split('&').map(kv => kv.split('='))[1][1]
+
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (!email) {
+    if (!password) {
       setError("Preencha todos os campos");
+    }else{
+      resetPassword(email, password, token).then((response) => {
+        if (response.data.status === 404) {
+          alert(response.data.errors[0]);
+        }else{
+          alert(`Verifique sua conta de email ${email}`)
+          navigate('/')
+        }
+      }).catch(function (error) {
+        console.log(error);
+        alert('Serviço indisponivel, entre em contato.');
+      });
     }
   };
 
   return (
     <>
-      <C.Container>
-      <C.Label>Login</C.Label>
+       <C.Container>
+      <C.Label>Recupere sua senha</C.Label>
       <C.Content>
-        <C.Strong>Insira seu email para enviarmos um link de redefinição</C.Strong>
-        <Input 
-          type="text"
-          placeholder="example@example.com"
-          value={email}
-          onChange={(e) => [setEmail(e.target.value), setError("")]}
+        <C.Strong>Informe a nova senha</C.Strong>
+        <Input
+          type="password"
+          placeholder="Digite sua Senha"
+          value={password}
+          onChange={(e) => [setPassword(e.target.value), setError("")]}
         />
         <C.labelError>{error}</C.labelError>
         
-        <Button Text="Entrar" onClick={handleSubmit} />
+        <Button Text="Atualizar" onClick={handleSubmit} />
       </C.Content>
     </C.Container>
     </>

@@ -2,13 +2,22 @@
 
 class User < ActiveRecord::Base
   devise :registerable, :timeoutable, :lockable,
-         :rememberable, :validatable, :trackable, :two_factor_authenticatable
+  :rememberable, :validatable, :trackable, :two_factor_authenticatable
   include DeviseTokenAuth::Concerns::User
+  
+  has_one_time_password
+  enum otp_module: { disabled: 0, enabled: 1}, _prefix: true
+  attr_accessor :otp_code_token
 
   validates_presence_of :email, on: :create, message: 'não pode fica em branco'
   validates_uniqueness_of :email, on: :create, message: 'deve ser unico'
 
   after_update :check_if_user_is_locker
+
+  validates :password, format: {
+    with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{12,32}\z/,
+    message: "deve ter entre 12 e 32 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial"
+  }, on: :create
 
   def generate_password_token!
     self.reset_password_token = generate_token

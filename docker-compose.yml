@@ -37,3 +37,9 @@ services:
       - 3000:3000
     depends_on:
       - api
+  
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"

@@ -22,6 +22,7 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Access Security - ROR</title>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6Le24RUnAAAAAONzTYViig7C8dyURQH2p0jaTpYG"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -37,4 +38,16 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    function onClick(e) {
+      e.preventDefault();
+      grecaptcha.enterprise.ready(async () => {
+        const token = await grecaptcha.enterprise.execute('6Le24RUnAAAAAONzTYViig7C8dyURQH2p0jaTpYG', {action: 'LOGIN'});
+        // IMPORTANT: The 'token' that results from execute is an encrypted response sent by
+        // reCAPTCHA Enterprise to the end user's browser.
+        // This token must be validated by creating an assessment.
+        // See https://cloud.google.com/recaptcha-enterprise/docs/create-assessment
+      });
+    }
+    </script>
 </html>

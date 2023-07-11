@@ -4,6 +4,13 @@ require 'api_constraints'
 
 Rails.application.routes.draw do
   devise_for :users
+  resource :users do 
+    member do
+      post :enable_multi_factor_authentication, to: 'users/multi_factor_authentication#verify_enable'
+      post :disable_multi_factor_authentication, to: 'users/multi_factor_authentication#verify_disabled'
+      post :mfa, to: 'users/sessions#create'
+    end
+  end
  
   post 'password/forgot', to: 'password#forgot'
   post 'password/reset', to: 'password#reset'
@@ -14,6 +21,7 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       get '/myaccount/profile', to: 'myaccount#profile'
       put '/myaccount/profile', to: 'myaccount#update', as: 'my_account_profile_update'
+      get '/myaccount/open_qrcode_mfa', to: 'myaccount#open_qrcode_mfa'
     end
 
     # for another features

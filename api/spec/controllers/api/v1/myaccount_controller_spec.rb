@@ -4,8 +4,24 @@
 require 'rails_helper'
 include ActionController::RespondWith
 
-RSpec.describe 'Api::V1::MyaccountController', type: :request do
+RSpec.describe Api::V1::MyaccountController, type: :request do
   let(:current_user) { create(:user) }
+
+  describe "GET #profile" do
+    before do
+      login(current_user)
+    end
+
+    context "when show profile" do
+      it "behaves like" do
+        get api_myaccount_profile_path
+
+          
+          binding.pry
+      end
+    end
+  end
+  
   describe 'GET #update' do
     context 'when update account whit correct params' do
       before do
@@ -21,7 +37,6 @@ RSpec.describe 'Api::V1::MyaccountController', type: :request do
         } }
 
         put api_my_account_profile_update_path(user_params)
-        binding.pry
         
         # expect(User.new(user_params[:user]).valid?).to eq(true)
         # expect(response.status).to eq(200)

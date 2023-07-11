@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     email { Faker::Omniauth.google[:info][:email] }
-    password { '12345678901234' }
-    password_confirmation { '12345678901234' }
+    password { 'GN&03i4686#A' }
+    password_confirmation { 'GN&03i4686#A' }
   end
 end

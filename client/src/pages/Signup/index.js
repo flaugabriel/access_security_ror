@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
 import { Link } from "react-router-dom";
 import { signup } from '../../operations/auth';
 import { signout } from '../../operations/auth';
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [signed, setSigned] = useState(false)
+  const [iSup, setIsup] = useState(false)
   const [email, setEmail] = useState("");
   const [emailConf, setEmailConf] = useState("");
   const [password, setPassword] = useState("");
@@ -18,20 +22,33 @@ const Signup = () => {
       setError("Preencha todos os campos");
     } else if (email !== emailConf) {
       setError("Os e-mails não são iguais");
-    }
-
-    signup(email, password, password_confirmation).then((response) => {
-      if (response.data.status === 404) {
-        alert('Verifique se o servidor esta disponivel ou tente mas tarde.');
+    }else{
+      signup(email, password, password_confirmation).then((response) => {
+        if (response.data.status === 404) {
+          alert('Verifique se o servidor esta disponivel ou tente mas tarde.');
+          signout()
+        }else{
+          alert('Cadastro realizado! \nPor favor realize o login!');
+          localStorage.removeItem("authorization");
+          localStorage.setItem("authorization", response.headers['authorization']);
+          alert('Bem vindo!');
+          setSigned(true)
+          setIsup(true)
+        }
+      }).catch(function (error) {
+        alert(error.response.data.errors.full_messages.toString());
         signout()
-      }else{
-        alert('Cadastro realizado! \nPor favor realize o login!');
-      }
-    }).catch(function (error) {
-      alert(error.response.data.errors.full_messages[0]);
-      signout()
-    });;
+      });;
+    }
   };
+
+  useEffect(() => {
+    if (signed && iSup) {
+      navigate('/home')
+    }if(iSup){
+      navigate('/home')
+    }
+  },[ signed ]);
 
   return (
     <C.Container>

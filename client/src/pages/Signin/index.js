@@ -18,16 +18,22 @@ const Signin = () => {
     }else{
       signin(email, senha).then((response) => {
         if (response.data.status === 404) {
-          alert(response.data.errors[0]);
+          alert(response.data.errors.toString());
         }else{
           localStorage.removeItem("authorization");
           localStorage.setItem("authorization", response.headers['authorization']);
-          alert('Bem vindo!');
-          setSigned(true)
+          if (response.data.data.otp_module === 'enabled') {
+            navigate('/mfa')
+          }else{
+            setSigned(true)
+          }
         }
       }).catch(function (error) {
-        console.log();
-        alert(error.response.data.errors[0]);
+        if (error.response.status === 500) {
+          alert('Erro interno, tente novamente mas tarde.')
+        } else {
+          alert(error.response.data.errors.toString());
+        }
       });
     }
   };
@@ -38,7 +44,7 @@ const Signin = () => {
     }else{
       navigate('/')
     }
-  },[ signed ]);
+  },[signed]);
 
   return (
     <C.Container>

@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import * as C from "./styles";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { passwordUpdate } from "../../operations/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { forgotPassword } from "../../operations/auth";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -14,9 +12,9 @@ const ForgotPassword = () => {
     if (!email) {
       setError("Preencha todos os campos");
     }else{
-      passwordUpdate(email).then((response) => {
+      forgotPassword(email).then((response) => {
         if (response.data.status === 404) {
-          alert(response.data.errors[0]);
+          alert(response.data.errors.toString());
         }else{
           alert(`Verifique sua conta de email ${email}`)
         }
@@ -30,7 +28,7 @@ const ForgotPassword = () => {
   return (
     <>
       <C.Container>
-      <C.Label>Login</C.Label>
+      <C.Label>Recupere sua senha</C.Label>
       <C.Content>
         <C.Strong>Insira seu email para enviarmos um link de redefinição</C.Strong>
         <Input 

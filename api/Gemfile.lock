@@ -46,6 +46,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_otp (2.3.2)
+      activemodel
+      rotp (~> 6.2.0)
     active_model_serializers (0.10.13)
       actionpack (>= 4.1, < 7.1)
       activemodel (>= 4.1, < 7.1)
@@ -78,6 +81,7 @@ GEM
     builder (3.2.4)
     case_transform (0.2)
       activesupport
+    chunky_png (1.4.0)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
@@ -98,6 +102,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-encryptable (0.2.0)
+      devise (>= 2.1.0)
     devise-two-factor (5.0.0)
       activesupport (~> 7.0)
       devise (~> 4.0)
@@ -213,6 +219,10 @@ GEM
       railties (>= 5.2)
     rexml (3.2.5)
     rotp (6.2.2)
+    rqrcode (2.2.0)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 1.0)
+    rqrcode_core (1.2.0)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -276,11 +286,15 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_model_otp
   active_model_serializers (~> 0.10.0)
+  bcrypt
   bootsnap (>= 1.4.4)
+  chunky_png (~> 1.3, >= 1.3.5)
   database_cleaner
   debug
   devise
+  devise-encryptable
   devise-two-factor
   devise_token_auth
   factory_bot_rails
@@ -293,6 +307,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
+  rqrcode (~> 2.0)
   rspec-rails (~> 4.0)
   rubocop-rails
   shoulda-matchers

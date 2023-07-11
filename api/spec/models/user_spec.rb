@@ -38,9 +38,9 @@ RSpec.describe User, type: :model do
     it '#reset_password! whit params' do
       user.generate_password_token!
       user.password_token_valid?
-      user.password = '123456789123456789'
-      user.password_confirmation = '123456789123456789'
-      user.reset_password!('123456789123456789')
+      user.password = 'GN&03i4686#Z'
+      user.password_confirmation = 'GN&03i4686#Z'
+      user.reset_password!('GN&03i4686#Z')
       expect(user.valid?).to eq(true)
     end
   end
