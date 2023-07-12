@@ -46,7 +46,9 @@ const MfaSettings = () => {
         console.log(items);
       }
     }).catch(error => {
-      console.log(error);
+      if (error.response !== undefined) {
+        alert(error.response.data.messager);
+      }
     });
   };
 

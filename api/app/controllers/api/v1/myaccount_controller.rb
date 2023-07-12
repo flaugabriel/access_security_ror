@@ -19,25 +19,7 @@ module Api
       end
 
       def open_qrcode_mfa
-        qrcode = RQRCode::QRCode.new(@resource.provisioning_uri, size: 10, level: :h)
-        png = qrcode.as_png(
-          bit_depth: 1,
-          border_modules: 4,
-          color_mode: ChunkyPNG::COLOR_GRAYSCALE,
-          color: "black",
-          file: nil,
-          fill: "white",
-          module_px_size: 6,
-          resize_exactly_to: false,
-          resize_gte_to: false,
-          size: 120
-        )
-        ActiveStorage::Current.host = request.base_url
-        temp_blob = ActiveStorage::Blob.create_and_upload!(
-          io: StringIO.new(png.to_s),
-          filename: 'temp.png',
-          content_type: 'image/png'
-        )
+        temp_blob = QrcodeCreateService.new(@resource, request).build
         
         if temp_blob.present? 
           render json: { qrcode: temp_blob.url }, status: :ok

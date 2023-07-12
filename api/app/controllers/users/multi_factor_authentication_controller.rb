@@ -7,7 +7,7 @@ class Users::MultiFactorAuthenticationController < ApplicationController
       current_user.otp_module_enabled!
       render json: { messager: 'MFA ativado!' }, status: :ok
     else
-      render json: { messager: 'MFA não pode ser ativado' }, status: :unprocessable_entity
+      render json: { messager: 'Token invalido!' }, status: :unprocessable_entity
     end
   end
 

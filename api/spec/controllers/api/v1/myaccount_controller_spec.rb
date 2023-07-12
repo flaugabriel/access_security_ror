@@ -5,61 +5,52 @@ require 'rails_helper'
 include ActionController::RespondWith
 
 RSpec.describe Api::V1::MyaccountController, type: :request do
-  let(:current_user) { create(:user) }
+  let(:auth_headers) { create(:user).create_new_auth_token }
 
-  describe "GET #profile" do
-    before do
-      login(current_user)
-    end
 
-    context "when show profile" do
-      it "behaves like" do
-        get api_myaccount_profile_path
+  describe '#profile' do
+    context "when get profile" do
+      it "gives you a data and status 200" do
+        get '/api/myaccount/profile', params: { }, headers: auth_headers
 
-          
-          binding.pry
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)['data'].class).to eq(Hash)
+        expect(JSON.parse(response.body)['data']['email']).to eq(auth_headers['uid'])
       end
     end
   end
-  
+
   describe 'GET #update' do
-    context 'when update account whit correct params' do
-      before do
-        api_user_session_path(current_user)
-      end
-      
+    context 'when update password whit correct params' do
       it 'gives you a status 200 on update and messager' do
-        
-        user_params = { user: {
-          email: 'falugabriel@gmail.com',
-          password: '123456789123456789',
-          password_confirmation: '123456789123456789'
-        } }
+        put '/api/myaccount/profile', params: 
+        {
+          user: { password: 'GN&03i4686#B', password_confirmation: 'GN&03i4686#B'}
+        }, headers: auth_headers
 
-        put api_my_account_profile_update_path(user_params)
-        
-        # expect(User.new(user_params[:user]).valid?).to eq(true)
-        # expect(response.status).to eq(200)
-        # expect(response.message).to eq('OK')
-        # expect(json).to eq(200)
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)['message']).to eq('Senha atualizado, realize o login novamente!')
       end
+    end
 
-      it 'when return error some password is wrong' do
-        user_params = { user: {
-          email: 'falugabriel@gmail.com',
-          password: '1',
-          password_confirmation: '654'
-        } }
-        put api_my_account_profile_update_path(user_params)
-        user = JSON.parse(response.body)
+    context "when update password whit invalid params" do
+      it 'gives error and status 422 and messager' do
+        put '/api/myaccount/profile', params: 
+        {
+          user: { password: 'GN&03i4686#Z', password_confirmation: 'GN&03i4686#B'}
+        }, headers: auth_headers
 
-        expect(response.status).to eq(401)
-        expect(user['errors'].present?).to eq(true)
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error']).to eq('Password confirmation não é igual a Password')
       end
     end
   end
-  
-  def login(current_user)
-    post '/api/auth/sign_in', params: { email: current_user.email, password: current_user.password }
+
+  describe 'GET #open_qrcode' do
+    context 'load service class' do
+      it 'gives QrcodeCreateService' do
+        allow_any_instance_of(QrcodeCreateService).to receive(:build)
+      end
+    end
   end
 end

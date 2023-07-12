@@ -8,8 +8,6 @@ Este projeto tem como finalidade de desenvolver mecanismo de acesso, dentre esse
 * proteção via captcha. 
 * duplo fator de autenticação.
 
-O objetivo é digitalizar a emissão e a baixa dos pagamentos, de forma que os dados sejam preenchidos automaticamente dentro de um padrão.
-
 Tecnologias utilizadas:
 * Ruby 3.2.1
 * Rails 7.0.4.3 (api)
@@ -104,11 +102,10 @@ resposta:
 }
 ```
 ### User
-#### atualiza perfil (email, senha)
+#### atualiza perfil (senha, confirmação)
 ```PUT localhost:3030/api/myaccount/profile```
 ```json
 {
-  "email": "test@gmail.com",
   "password": "12345678",
   "password_confirmation": "12345678"
 }
@@ -116,7 +113,7 @@ resposta:
 resposta:
 ```json
 {
-	"message": "Perfil atualizado."
+	"message": "Senha atualizado."
 }
 ```
 #### consulta perfil/session
