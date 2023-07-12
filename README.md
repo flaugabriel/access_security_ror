@@ -186,5 +186,5 @@ docker-compose run --rm api rspec
 ```
 
 ## Cobertura de codigos (SimpleCov)
-Após compila os testes vá clique [aqui](api/coverage/index.html) para visualizar a cobertura de testes.
+Após compila os testes abra este arquivo ```api/coverage/index.html``` no navegador para visualizar a cobertura de testes.
 ### Fim Obrigado! :D 🚀
