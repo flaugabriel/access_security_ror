@@ -138,19 +138,53 @@ resposta:
 		"updated_at": "2023-05-22T10:49:16.968-04:00"
 	}
 }
+```
+#### Esqueceu sua senha
+```POST localhost:3030/password/forgot```
+```json
+{
+  "email": "flaugabriel@gmail.com"
+}
+```
+resposta:
+```json
+{
+	"status": "ok"
+}
+```
+#### Recupere sua senha
+```POST localhost:3030/password/reset```
 
+```json
+{
+  "email": "flaugabriel@gmail.com",
+  "token": "05b0b53d881660c62ae1",
+  "password": "Gabrielwga28201945"
+}
+```
+resposta
+```json 
+{
+ 	"status": "ok"
+}
+```
+#### Recupere sua conta 
+```POST localhost:3030/unlock/show?unlock_token=<token>```
+
+params: token é verifique no email o token
+resposta:
+```json
+{
+	"messager": "Conta desbloqueada"
+}
 ```
 ## Testes 
 
 Executando todos os testes
 ```shell
-docker compose run --rm access_security_roo rspec
+docker-compose run --rm api rspec
 ```
-## Telas
-LOGIN
-![LOGIN](login.jpeg)
-REGISTER
-![REGISTER](register.jpeg)
-HOME
-![HOME](home.jpeg)
+
+## Cobertura de codigos (SimpleCov)
+Após compila os testes vá clique [aqui](api/coverage/index.html) para visualizar a cobertura de testes.
 ### Fim Obrigado! :D 🚀
