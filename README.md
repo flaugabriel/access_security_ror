@@ -27,7 +27,7 @@ Para instala e configura as imagens e containers
 ```shell
 docker-compose build
 ```
-Levanta os servidores
+Levanta os serviços
 
 ```shell
 docker-compose up
